@@ -11,7 +11,7 @@
  .page-content {
     padding: 2rem 0;
     @include make-container();
-    @extend .container;
+    @extend .container-fluid;
     min-height: calc(100vh - #{$navbar-height} - 50px);
     flex-grow: 1;
 
@@ -46,4 +46,9 @@
       }
     }
   }
+}
+
+.page-content,
+.container-fluid {
+  width: 85% !important;
 }
