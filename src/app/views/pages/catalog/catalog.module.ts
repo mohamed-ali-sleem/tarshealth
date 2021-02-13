@@ -1,35 +1,52 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
-import { FeahterIconModule } from 'src/app/core/feather-icon/feather-icon.module';
-import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Routes, RouterModule } from "@angular/router";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { FeahterIconModule } from "src/app/core/feather-icon/feather-icon.module";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 // Ng-ApexCharts
-import { NgApexchartsModule } from "ng-apexcharts";
-
-// Ng2-charts
-import { ChartsModule } from 'ng2-charts';
-import { CatalogComponent } from './catalog.component';
+import { HighchartsChartModule } from "highcharts-angular";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { CatalogComponent } from "./catalog.component";
+import { ListComponent } from "./list/list.component";
+import { DetailsComponent } from "./details/details.component";
+import { AddComponent } from './add/add.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: CatalogComponent
-  }
-]
+    path: "",
+    component: CatalogComponent,
+    children: [
+      {
+        path: "",
+        component: ListComponent,
+      },
+      {
+        path: "details",
+        component: DetailsComponent,
+      },
+      {
+        path: "new",
+        component: AddComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
-  declarations: [CatalogComponent],
+  declarations: [CatalogComponent, ListComponent, DetailsComponent, AddComponent],
   imports: [
     CommonModule,
+    HttpClientModule,
     RouterModule.forChild(routes),
     FormsModule,
     FeahterIconModule,
+    HighchartsChartModule,
     NgbModule,
-    NgApexchartsModule,
-    ChartsModule
-  ]
+    NgxDatatableModule
+  ],
+  providers: [HttpClient],
 })
-export class CatalogModule { }
+export class CatalogModule {}

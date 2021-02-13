@@ -1,0 +1,12 @@
+<h5 class="my-3">Create Chart</h5>
+<div class="row" *ngIf="!dataSelected" (click)="drawChart()" >
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="card">
+          <img src="../../../../../assets/images/charts/bar.jpg" class="card-img-top img-fluid" alt="...">
+        </div>
+    </div>
+</div>
+
+<highcharts-chart *ngIf="dataSelected" [Highcharts]="Highcharts" [options]="chartOptions"
+    style="width: 100%; height: 400px; display: block;">
+</highcharts-chart>

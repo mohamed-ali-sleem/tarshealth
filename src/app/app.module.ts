@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { LayoutModule } from './views/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
@@ -15,10 +16,11 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
+    HighchartsChartModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,

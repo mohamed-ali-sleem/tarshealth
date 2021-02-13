@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">Welcome {{ userName }}</h4>
+  </div>
+  <div class="d-flex align-items-center flex-wrap text-nowrap">
+    <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0" routerLink="new">
+      <i class="btn-icon-prepend" data-feather="plus" appFeatherIcon></i>
+      Create Dashboard
+    </button>
+  </div>
+</div>
+<div class="folders" *ngFor="let folders of foldersList; let $index=index;">
+  <div class="folder__header my-3" (click)="Collaps($index)" [attr.aria-expanded]="$index !== expandedIndex"
+    aria-controls="collapseExample{{$index}}">
+    <span class="folder__header--text">
+      <i class="link-icon" data-feather="chevron-right" appFeatherIcon></i>
+      {{folders.title}} ({{ folders.list.length }})
+    </span>
+  </div>
+  <div class="folder__list" id="collapseExample{{$index}}" [ngbCollapse]="$index === expandedIndex">
+    <div class="row">
+      <div class="col-2 mb-3" *ngFor="let list of folders.list;let i=index">
+        <div class="folder__list--item" [class.dashboard]="list.dashboard" routerLink="details">
+          <i class="link-icon mdi " [ngClass]="list.dashboard ? 'mdi-chart-arc' : 'mdi-folder'"> </i>
+          <div>
+            <h3 class="title">{{list.name}}</h3>
+            <p class="description" *ngIf="list.dashboard">It is a long established</p>
+          </div>
+          <span class="user-name">
+            {{list.user}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="dashboards">
+  <div class="dashboard__header" (click)="isCollapsed1 = !isCollapsed1" [attr.aria-expanded]="!isCollapsed1"
+    aria-controls="collapseExample">
+    <i class="link-icon" data-feather="chevron-right"></i> My Drive
+  </div>
+  <div class="dashboard__list" id="collapseExample" [ngbCollapse]="isCollapsed1">
+    <div class="dashboard__list--item">
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="brands-name">
+  <div *ngFor="let data of ParentList; let $index=index;">
+    <div (click)="Collaps($index)">Item{{index + 1}}</div>
+    <div *ngIf="$index === expandedIndex">
+      <div *ngFor="let data of ChildList;let i=index">
+        <div class="row" style="margin-left:0px;margin-right:0px">
+          <div class="col-sm-1">Sub-Item{{index + 1}}</div>
+          <div class="col-sm-6" style="width: 80%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
