@@ -1,0 +1,10 @@
+// select css 
+.ng-select .ng-select-container {
+    height: 50px !important
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    padding-bottom: 0 !important;
+}

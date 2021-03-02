@@ -10,6 +10,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
+import { NgxTagsModule } from 'ngx-tags';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
@@ -24,6 +25,7 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    NgxTagsModule
   ],
   providers: [
     AuthGuard,

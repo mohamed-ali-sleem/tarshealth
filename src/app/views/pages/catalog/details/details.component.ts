@@ -20,6 +20,14 @@ Funnel3d(Highcharts);
 export class DetailsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
 
+  filters = [
+    { id: 1, name: "Male" },
+    { id: 2, name: "Female" },
+  ];
+  chart;
+  updateFromInput = false;
+  chartConstructor = "chart";
+  chartCallback;
   chartOptions = {
     chart: {
       type: "funnel3d",
@@ -31,7 +39,7 @@ export class DetailsComponent implements OnInit {
       },
     },
     title: {
-      text: "Highcharts Funnel3D Chart",
+      text: "",
     },
     plotOptions: {
       series: {
@@ -51,11 +59,8 @@ export class DetailsComponent implements OnInit {
       {
         name: "Unique users",
         data: [
-          ["Website visits", 15654],
-          ["Downloads", 4064],
-          ["Requested price list", 1987],
-          ["Invoice sent", 976],
-          ["Finalized", 846],
+          ["Male", 15654],
+          ["Female", 60000],
         ],
       },
     ],
@@ -67,7 +72,7 @@ export class DetailsComponent implements OnInit {
       plotShadow: false,
     },
     title: {
-      text: "Browser market shares at a specific website, 2014",
+      text: "",
     },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
@@ -90,18 +95,10 @@ export class DetailsComponent implements OnInit {
         type: "pie",
         name: "Browser share",
         data: [
-          ["Firefox", 45.0],
-          ["IE", 26.8],
-          {
-            name: "Chrome",
-            y: 12.8,
-            sliced: true,
-            selected: true,
-          },
-          ["Safari", 8.5],
-          ["Opera", 6.2],
-          ["Others", 0.7],
+          ["Male", 45.0],
+          ["Female", 26.8],
         ],
+        
       },
     ],
   };
@@ -112,15 +109,23 @@ export class DetailsComponent implements OnInit {
   ColumnMode = ColumnMode;
 
   constructor() {
+    const self = this;
+
     this.fetch((data) => {
       this.rows = data;
       setTimeout(() => {
         this.loadingIndicator = false;
       }, 1500);
     });
+
+    // saving chart reference using chart callback
+    this.chartCallback = chart => {
+      self.chart = chart;
+    };
   }
 
   ngOnInit(): void {}
+
   fetch(cb) {
     const req = new XMLHttpRequest();
     req.open("GET", `assets/data/100k.json`);
@@ -128,5 +133,46 @@ export class DetailsComponent implements OnInit {
       cb(JSON.parse(req.response));
     };
     req.send();
+  }
+
+  fetchMale(cb) {
+    const req = new XMLHttpRequest();
+    req.open("GET", `assets/data/100-male.json`);
+    req.onload = () => {
+      cb(JSON.parse(req.response));
+    };
+    req.send();
+  }
+
+  onChange($event) {
+    // this.chartOptions.series[0].data =345345;
+    const self = this;
+    self.updateFromInput = true;
+    self.chartOptions.series = [
+      {
+        name: "Test",
+        data: [
+          ["Male", 3000],
+          ["Female", 2000],
+        ],
+      },
+    ];
+    self.chartOptions2.series = [
+      {
+        type: "pie",
+        name: "New Browser share",
+        data: [
+          ["Male", 567.0],
+          ["Female", 234.8],
+        ],
+      },
+    ]
+
+    this.fetchMale((data) => {
+      this.rows = data;
+      setTimeout(() => {
+        this.loadingIndicator = false;
+      }, 1500);
+    });
   }
 }

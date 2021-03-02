@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { FeahterIconModule } from "src/app/core/feather-icon/feather-icon.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // Ng-ApexCharts
 import { HighchartsChartModule } from "highcharts-angular";
@@ -45,7 +46,8 @@ const routes: Routes = [
     FeahterIconModule,
     HighchartsChartModule,
     NgbModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgSelectModule
   ],
   providers: [HttpClient],
 })

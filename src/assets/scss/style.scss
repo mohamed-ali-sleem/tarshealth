@@ -93,7 +93,7 @@
 @import '~@swimlane/ngx-datatable/index.css';
 @import '~@swimlane/ngx-datatable/themes/bootstrap.css';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
-
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
 // Plugin overrides
 @import "./components/plugin-overrides/full-calendar";
@@ -108,3 +108,5 @@
 @import "./components/plugin-overrides/apex-charts";
 @import "./components/plugin-overrides/data-tables";
 @import "./components/plugin-overrides/ngx-datatable";
+
+@import "_custom.scss"

@@ -1,10 +1,14 @@
+<ng-select [multiple]="true" [(ngModel)]="selectedFilter" class="mb-4" (change)="onChange($event)" placeholder="Add Filter">
+   <ng-option *ngFor="let filter of filters" [value]="filter.name" >{{filter.name}}</ng-option>
+</ng-select>
+
 <h5 class="mb-3">Data Summary</h5>
 <div class="row">
    <div class="col-6 col-xl-6 grid-margin stretch-card">
       <div class="card overflow-hidden">
          <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-               <h6 class="card-title mb-0">Revenue</h6>
+               <h6 class="card-title mb-0">Gender</h6>
                <div ngbDropdown>
                   <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button"
                      id="dropdownMenuButton3">
@@ -29,13 +33,13 @@
             </div>
             <div class="row align-items-start mb-2">
                <div class="col-md-7">
-                  <p class="text-muted tx-13 mb-3 mb-md-0">Revenue is the income that a business has from its normal
-                     business activities, usually from the sale of goods and services to customers.</p>
+                  <p class="text-muted tx-13 mb-3 mb-md-0">Count oF MALES & FEMALES</p>
                </div>
 
             </div>
             <div class="flot-wrapper">
-               <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+               <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [constructorType]="chartConstructor"
+                  [callbackFunction]="chartCallback" [(update)]="updateFromInput" [oneToOne]="true"
                   style="width: 100%; height: 400px; display: block;">
                </highcharts-chart>
             </div>
@@ -47,7 +51,7 @@
       <div class="card overflow-hidden">
          <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-               <h6 class="card-title mb-0">Revenue</h6>
+               <h6 class="card-title mb-0">Gender</h6>
                <div ngbDropdown>
                   <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button"
                      id="dropdownMenuButton3">
@@ -72,13 +76,13 @@
             </div>
             <div class="row align-items-start mb-2">
                <div class="col-md-7">
-                  <p class="text-muted tx-13 mb-3 mb-md-0">Revenue is the income that a business has from its normal
-                     business activities, usually from the sale of goods and services to customers.</p>
+                  <p class="text-muted tx-13 mb-3 mb-md-0">Count oF MALES & FEMALES</p>
                </div>
 
             </div>
             <div class="flot-wrapper">
-               <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions2"
+               <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions2" [constructorType]="chartConstructor"
+               [callbackFunction]="chartCallback" [(update)]="updateFromInput" [oneToOne]="true"
                   style="width: 100%; height: 400px; display: block;">
                </highcharts-chart>
             </div>
