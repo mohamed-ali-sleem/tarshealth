@@ -74,12 +74,6 @@ export class DetailsComponent implements OnInit {
       },
     },
     series: [
-      {
-        name: "Patients",
-        data: [
-
-        ],
-      },
     ],
   };
 
@@ -131,12 +125,9 @@ export class DetailsComponent implements OnInit {
       self.updateFromInput = true;
       self.chartOptions.series = [
         {
+          type: "funnel3d",
           name: "Patients",
-          data: [
-            ['Patients', 555],
-            ['Patients', 12],
-            ['Patients', res.data.length],
-          ],
+          data: [555, res.data.length],
         },
       ];
     }, err => {

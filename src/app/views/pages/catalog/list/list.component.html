@@ -10,8 +10,7 @@
   </div>
 </div>
 <div class="folders" *ngFor="let folders of foldersList; let $index=index;">
-  <div class="folder__header my-3" (click)="Collaps($index)" [attr.aria-expanded]="$index !== expandedIndex"
-    aria-controls="collapseExample{{$index}}">
+  <div class="folder__header my-3" (click)="Collaps($index)" [attr.aria-expanded]="$index !== expandedIndex">
     <span class="folder__header--text">
       <i class="link-icon" data-feather="chevron-right" appFeatherIcon></i>
       {{folders.title}} ({{ folders.list.length }})
