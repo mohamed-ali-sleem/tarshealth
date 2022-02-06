@@ -1,6 +1,7 @@
 .main-wrapper {
   display: flex;
   overflow: hidden;
+
   .page-wrapper {
     min-height: 100vh;
     background: $content-bg;
@@ -10,21 +11,26 @@
     flex-direction: column;
     -webkit-transition: margin 0.1s ease, width 0.1s ease;
     transition: margin 0.1s ease, width 0.1s ease;
+
     .page-content {
       flex-grow: 1;
       padding: 25px;
       margin-top: $navbar-height;
+
       @media (max-width: 767px) {
         padding: 25px 15px;
       }
     }
+
     &.full-page {
       width: 100%;
       margin-left: 0;
+
       .page-content {
         margin-top: 0;
       }
     }
+
     @media (max-width: 991px) {
       margin-left: 0;
       width: 100%;
@@ -33,8 +39,8 @@
 }
 
 .page-content {
-  .main-content {
-  }
+  .main-content {}
+
   .content-nav-wrapper {
     padding: 0;
     position: fixed;
@@ -44,11 +50,14 @@
     max-height: calc(100% - #{$navbar-height} - 51px);
     border-left: 1px solid $border-color;
     display: none;
+
     @media (min-width: 1200px) {
       display: block;
     }
+
     .content-nav {
       padding: 0 25px;
+
       .nav-item {
         .nav-link {
           padding: 0;
@@ -64,7 +73,10 @@
   }
 }
 
-.page-content,
-.container-fluid {
-  width: 85% !important;
+@media(min-width: 1048px) {
+
+  .page-content,
+  .container-fluid {
+    width: 85% !important;
+  }
 }

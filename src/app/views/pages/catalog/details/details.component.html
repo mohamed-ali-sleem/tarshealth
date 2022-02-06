@@ -1,53 +1,81 @@
-<ng-select [multiple]="true" [(ngModel)]="selectedFilter" class="mb-4" (change)="onChange($event)" placeholder="Add Filter">
-   <ng-option *ngFor="let filter of filters" [value]="filter.name" >{{filter.name}}</ng-option>
-</ng-select>
+<div ngbDropdown class="mb-4 pointer">
 
-<h5 class="mb-3">Data Summary</h5>
-<div class="row">
-   <div class="col-6 col-xl-6 grid-margin stretch-card">
+   <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0" ngbDropdownToggle>
+      <i class="btn-icon-prepend" data-feather="plus" appFeatherIcon></i>
+      Add Filter
+   </button>
+   <div ngbDropdownMenu class="p-0 py-4">
+      <div class="d-flex tars-tabs px-3">
+         <div class="tars-tab text-capitalize" *ngFor="let cat of categories" [ngClass]="{'active' : cat.isActive}"
+            (click)="changeCategory(cat)">
+            {{cat.name}}
+         </div>
+      </div>
+      <div class="p-3 tars-sub-cat">
+         <!-- <div class="input-group input-group-sm mb-3">
+            <input type="text" class="form-control" placeholder="Search" (change)="searchSubCat($event)" >
+          </div> -->
+         <div ngbDropdownItem class="d-flex align-items-center tars-sub-cat-item"
+            *ngFor="let subCategoty of subCategotyList" (click)="chageSubFilters(subCategoty)">
+            <i data-feather="chevron-right" appFeatherIcon class="icon-sm"></i>
+            <span class="px-2">{{subCategoty.description}}</span>
+         </div>
+
+      </div>
+   </div>
+</div>
+
+<div class="row mb-4">
+   <div class="col-auto" *ngIf="procedure">
+      <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0" (click)="clearFilter('procedure')">
+         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon ></i>
+         {{procedure.description}}
+      </button>
+   </div>
+   <div class="col-auto" *ngIf="condition">
+      <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon (click)="clearFilter('condition')"></i>
+         {{condition.description}}
+      </button>
+   </div>
+   <div class="col-auto" *ngIf="medication">
+      <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon (click)="clearFilter('medication')"></i>
+         {{medication.description}}
+      </button>
+   </div>
+</div>
+<div class="row justify-content-center">
+   <div class="col-12 grid-margin stretch-card">
       <div class="card overflow-hidden">
-         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-               <h6 class="card-title mb-0">Gender</h6>
-               <div ngbDropdown>
-                  <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button"
-                     id="dropdownMenuButton3">
-                     <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
-                  </button>
-                  <div ngbDropdownMenu aria-labelledby="dropdownMenuButton3">
-                     <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i data-feather="eye"
-                           appFeatherIcon class="icon-sm mr-2"></i> <span class="">View</span></a>
-                     <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i
-                           data-feather="edit-2" appFeatherIcon class="icon-sm mr-2"></i> <span class="">Edit</span></a>
-                     <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i
-                           data-feather="trash" appFeatherIcon class="icon-sm mr-2"></i> <span
-                           class="">Delete</span></a>
-                     <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i
-                           data-feather="printer" appFeatherIcon class="icon-sm mr-2"></i> <span
-                           class="">Print</span></a>
-                     <a ngbDropdownItem class="d-flex align-items-center" href="" (click)="false"><i
-                           data-feather="download" appFeatherIcon class="icon-sm mr-2"></i> <span
-                           class="">Download</span></a>
+         <div class="row justify-content-center">
+            <div class="col-lg-6">
+               <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
+                     <h6 class="card-title mb-0">Patients</h6>
+                  </div>
+                  <div class="flot-wrapper" *ngIf="!isLoading">
+                     <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+                        [constructorType]="chartConstructor" [callbackFunction]="chartCallback"
+                        [(update)]="updateFromInput" [oneToOne]="true"
+                        style="width: 100%; height: 400px; display: block;">
+                     </highcharts-chart>
+                  </div>
+                  <div class="py-5" *ngIf="isLoading">
+                     <div class="spinner-wrapper fit-full">
+                        <div class="spinner"></div>
+                     </div>
                   </div>
                </div>
-            </div>
-            <div class="row align-items-start mb-2">
-               <div class="col-md-7">
-                  <p class="text-muted tx-13 mb-3 mb-md-0">Count oF MALES & FEMALES</p>
-               </div>
 
             </div>
-            <div class="flot-wrapper">
-               <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [constructorType]="chartConstructor"
-                  [callbackFunction]="chartCallback" [(update)]="updateFromInput" [oneToOne]="true"
-                  style="width: 100%; height: 400px; display: block;">
-               </highcharts-chart>
-            </div>
+
          </div>
+
       </div>
    </div>
 
-   <div class="col-6 col-xl-6 grid-margin stretch-card">
+   <!-- <div class="col-6 col-xl-6 grid-margin stretch-card">
       <div class="card overflow-hidden">
          <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
@@ -88,7 +116,7 @@
             </div>
          </div>
       </div>
-   </div>
+   </div> -->
 </div> <!-- row -->
 
 <h5 class="my-3">Data Table</h5>
@@ -96,18 +124,24 @@
    <div class="col-md-12 stretch-card">
       <div class="card">
          <div class="card-body">
-            <div class="table-responsive">
-               <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator"
+            <div class="table-responsive" *ngIf="!isLoading">
+               <ngx-datatable class="bootstrap" [rows]="patientList" [loadingIndicator]="loadingIndicator"
                   [columnMode]="ColumnMode.force" [footerHeight]="50" [limit]="10" rowHeight="auto">
-                  <ngx-datatable-column name="Id"></ngx-datatable-column>
-                  <ngx-datatable-column name="Name"></ngx-datatable-column>
-                  <ngx-datatable-column name="Gender"></ngx-datatable-column>
-                  <ngx-datatable-column name="Age"></ngx-datatable-column>
-                  <ngx-datatable-column name="City" prop="address.city"></ngx-datatable-column>
-                  <ngx-datatable-column name="State" prop="address.state"></ngx-datatable-column>
+                  <ngx-datatable-column name="Id" prop="_id"></ngx-datatable-column>
+                  <ngx-datatable-column name="Date Of Birth" prop="BIRTHDATE"></ngx-datatable-column>
+                  <ngx-datatable-column name="Marital" prop="MARITAL"></ngx-datatable-column>
+                  <ngx-datatable-column name="Gender" prop="GENDER"></ngx-datatable-column>
+                  <ngx-datatable-column name="City" prop="STATE"></ngx-datatable-column>
                </ngx-datatable>
             </div>
+            <div class="py-5" *ngIf="isLoading">
+               <div class="spinner-wrapper fit-full">
+                  <div class="spinner"></div>
+               </div>
+            </div>
+
          </div>
+
       </div>
    </div>
 </div>

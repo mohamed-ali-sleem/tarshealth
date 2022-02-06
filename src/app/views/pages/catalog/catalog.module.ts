@@ -14,6 +14,7 @@ import { CatalogComponent } from "./catalog.component";
 import { ListComponent } from "./list/list.component";
 import { DetailsComponent } from "./details/details.component";
 import { AddComponent } from './add/add.component';
+import { CatalogService } from "./service/catalog.service";
 
 const routes: Routes = [
   {
@@ -49,6 +50,6 @@ const routes: Routes = [
     NgxDatatableModule,
     NgSelectModule
   ],
-  providers: [HttpClient],
+  providers: [HttpClient,CatalogService],
 })
 export class CatalogModule {}

@@ -6,6 +6,7 @@ import { ColumnMode } from "@swimlane/ngx-datatable";
 import highcharts3D from "highcharts/highcharts-3d";
 import Cylinder from "highcharts/modules/cylinder";
 import Funnel3d from "highcharts/modules/funnel3d";
+import { CatalogService } from "../service/catalog.service";
 
 // Initialize exporting module.
 highcharts3D(Highcharts);
@@ -19,15 +20,32 @@ Funnel3d(Highcharts);
 })
 export class DetailsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
-
-  filters = [
-    { id: 1, name: "Male" },
-    { id: 2, name: "Female" },
+  categories = [
+    { id: 0, name: "procedures", isActive: true },
+    { id: 1, name: "conditions", isActive: false },
+    { id: 2, name: "medications", isActive: false },
   ];
+  isLoading = false;
+  selectedTab;
+  filters = {
+    procedure: null,
+    condition: null,
+    medication: null
+  }
+
+  procedure: any;
+  condition: any;
+  medication: any;
+
+
+  patientList = []
+
+  subCategotyList = [];
   chart;
   updateFromInput = false;
   chartConstructor = "chart";
   chartCallback;
+  searchQuery = '';
   chartOptions = {
     chart: {
       type: "funnel3d",
@@ -57,48 +75,10 @@ export class DetailsComponent implements OnInit {
     },
     series: [
       {
-        name: "Unique users",
+        name: "Patients",
         data: [
-          ["Male", 15654],
-          ["Female", 60000],
-        ],
-      },
-    ],
-  };
 
-  chartOptions2 = {
-    chart: {
-      plotBorderWidth: null,
-      plotShadow: false,
-    },
-    title: {
-      text: "",
-    },
-    tooltip: {
-      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: "pointer",
-        dataLabels: {
-          enabled: true,
-          format: "<b>{point.name}%</b>: {point.percentage:.1f} %",
-          style: {
-            color: Highcharts.theme || "black",
-          },
-        },
-      },
-    },
-    series: [
-      {
-        type: "pie",
-        name: "Browser share",
-        data: [
-          ["Male", 45.0],
-          ["Female", 26.8],
         ],
-        
       },
     ],
   };
@@ -108,15 +88,8 @@ export class DetailsComponent implements OnInit {
   reorderable = true;
   ColumnMode = ColumnMode;
 
-  constructor() {
+  constructor(private _catalogService: CatalogService) {
     const self = this;
-
-    this.fetch((data) => {
-      this.rows = data;
-      setTimeout(() => {
-        this.loadingIndicator = false;
-      }, 1500);
-    });
 
     // saving chart reference using chart callback
     this.chartCallback = chart => {
@@ -124,55 +97,79 @@ export class DetailsComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open("GET", `assets/data/100k.json`);
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-    req.send();
+  ngOnInit(): void {
+    this.changeCategory({ id: 0, name: "procedures", isActive: true })
+    this.getPatients()
   }
 
-  fetchMale(cb) {
-    const req = new XMLHttpRequest();
-    req.open("GET", `assets/data/100-male.json`);
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
-    req.send();
-  }
 
-  onChange($event) {
-    // this.chartOptions.series[0].data =345345;
-    const self = this;
-    self.updateFromInput = true;
-    self.chartOptions.series = [
-      {
-        name: "Test",
-        data: [
-          ["Male", 3000],
-          ["Female", 2000],
-        ],
-      },
-    ];
-    self.chartOptions2.series = [
-      {
-        type: "pie",
-        name: "New Browser share",
-        data: [
-          ["Male", 567.0],
-          ["Female", 234.8],
-        ],
-      },
-    ]
-
-    this.fetchMale((data) => {
-      this.rows = data;
-      setTimeout(() => {
-        this.loadingIndicator = false;
-      }, 1500);
+  changeCategory(tab) {
+    this.selectedTab = tab
+    console.log(tab);
+    this.categories.forEach(element => {
+      element.isActive = false
     });
+    this.categories[tab.id].isActive = true;
+    this._catalogService.getFilters(tab.name).subscribe(res => {
+      console.log(res);
+      this.subCategotyList = [...res.data];
+
+    }, err => {
+      console.log(err);
+
+    })
+  }
+
+
+  getPatients(filters = {}) {
+    this.isLoading = true
+    this._catalogService.getPatientList(filters).subscribe(res => {
+      console.log(res);
+      this.isLoading = false
+      this.patientList = [...res.data];
+      const self = this;
+      self.updateFromInput = true;
+      self.chartOptions.series = [
+        {
+          name: "Patients",
+          data: [
+            ['Patients', 555],
+            ['Patients', 12],
+            ['Patients', res.data.length],
+          ],
+        },
+      ];
+    }, err => {
+      console.log(err);
+      this.isLoading = false
+
+    })
+  }
+
+
+  chageSubFilters(sub: any) {
+    switch (this.selectedTab.name) {
+      case 'procedures':
+        // code block
+        this.procedure = sub
+        this.filters.procedure = this.procedure._id
+        break;
+      case 'conditions':
+        // code block
+        this.condition = sub
+        this.filters.condition = this.condition._id
+        break;
+      default:
+        // code block
+        this.medication = sub
+        this.filters.medication = this.medication._id
+    }
+    this.getPatients(this.filters)
+  }
+
+  clearFilter(val) {
+    this.filters[val] = null;
+    this[val] = null;
+    this.getPatients(this.filters)
   }
 }

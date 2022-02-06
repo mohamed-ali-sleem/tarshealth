@@ -5,10 +5,12 @@
       max-width: 100%;
     }
   }
+
   @media (max-width: 991px) {
     margin-top: $navbar-height;
   }
- .page-content {
+
+  .page-content {
     padding: 2rem 0;
     @include make-container();
     @extend .container-fluid;
@@ -24,14 +26,18 @@
       max-height: calc(100% - #{$navbar-height} - 51px);
       border-left: 1px solid $border-color;
       display: none;
+
       @media(min-width: 1200px) {
         display: block;
       }
+
       @media(min-width: 1400px) {
         right: 8%;
       }
+
       .content-nav {
         padding: 0 25px;
+
         .nav-item {
           .nav-link {
             padding: 0;
@@ -48,7 +54,10 @@
   }
 }
 
-.page-content,
-.container-fluid {
-  width: 85% !important;
+@media(min-width: 1048px) {
+
+  .page-content,
+  .container-fluid {
+    width: 85% !important;
+  }
 }
