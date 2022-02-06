@@ -17,8 +17,13 @@
           </div> -->
          <div ngbDropdownItem class="d-flex align-items-center tars-sub-cat-item"
             *ngFor="let subCategoty of subCategotyList" (click)="chageSubFilters(subCategoty)">
-            <i data-feather="chevron-right" appFeatherIcon class="icon-sm"></i>
-            <span class="px-2">{{subCategoty.description}}</span>
+
+
+            <div *ngIf="selectedTab.name == 'age'">{{subCategoty.fromage}} -> {{subCategoty.toage}}</div>
+            <div *ngIf="selectedTab.name != 'age'">
+               <i data-feather="chevron-right" appFeatherIcon class="icon-sm"></i>
+               <span class="px-2">{{subCategoty.description}}</span>
+            </div>
          </div>
 
       </div>
@@ -26,19 +31,32 @@
 </div>
 
 <div class="row mb-4">
-   <div class="col-auto" *ngIf="procedure">
+
+   <div class="col-auto mb-3" *ngIf="gender">
+      <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0" (click)="clearFilter('gender')">
+         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon></i>
+         {{gender.description}}
+      </button>
+   </div>
+   <div class="col-auto mb-3" *ngIf="age">
+      <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0" (click)="clearFilter('age')">
+         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon></i>
+         {{age.fromage}} ->  {{age.toage}}
+      </button>
+   </div>
+   <div class="col-auto mb-3" *ngIf="procedure">
       <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0" (click)="clearFilter('procedure')">
-         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon ></i>
+         <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon></i>
          {{procedure.description}}
       </button>
    </div>
-   <div class="col-auto" *ngIf="condition">
+   <div class="col-auto mb-3" *ngIf="condition">
       <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
          <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon (click)="clearFilter('condition')"></i>
          {{condition.description}}
       </button>
    </div>
-   <div class="col-auto" *ngIf="medication">
+   <div class="col-auto mb-3" *ngIf="medication">
       <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
          <i class="btn-icon-prepend" data-feather="x-circle" appFeatherIcon (click)="clearFilter('medication')"></i>
          {{medication.description}}
