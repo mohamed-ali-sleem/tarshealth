@@ -127,7 +127,7 @@ export class DetailsComponent implements OnInit {
         {
           type: "funnel3d",
           name: "Patients",
-          data: [555, res.data.length],
+          data: [ res.data.length],
         },
       ];
     }, err => {
